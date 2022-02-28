@@ -1,0 +1,21 @@
+# https://www.websequencediagrams.com/?lz=bm90ZSBvdmVyIGJyb3dzZXI6CnVzZXIgd3JpdGVzIHNvbWV0aGluZyBvbiB0aGUgdGV4dCBmaWVsZAphbmQgY2xpY2tzABUIc3VibWl0IGJ1dHRvbiAKZW5kIG5vdGUKCgBTEwBoByBjcmVhdGVzIGEgbmV3ACoFIG9iamVjdCwKYWRkcyBpdCB0bwB2BW5vdGVzIGxpc3QsCnJlcmVuZGVycwARCQAUBQCBHghwYWdlAIEbBXNlbmQAHQcAVgh0byBzZXJ2ZXIAgRULAIF1By0-ABQGOiBIVFRQIFBPU1QgaHR0cHM6Ly9zdHVkaWVzLmNzLmhlbHNpbmtpLmZpL2V4YW1wbGVhcHAvbmV3X25vdGVfc3BhAIFnDABNBwoAcAYgAIFRBQCBAhBhbiBhcnJheSBjYWxsZQCCMQZzAII2CwCBLAYtLT4Agx4IIDIwMSBDUkVBVEVEIHsibWVzc2FnZSI6IgCDTAUAgk8GZCJ9Cg&s=default
+
+note over browser:
+user writes something on the text field
+and clicks on the submit button 
+end note
+
+note over browser:
+browser creates a new note object,
+adds it to the notes list,
+rerenders the note list on the page
+and sends the new note to server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+server adds the new note to an array called notes
+end note
+
+server-->browser: 201 CREATED {"message":"note created"}
