@@ -1,0 +1,3 @@
+[submodule "part-3/phonebook"]
+	path = part-3/phonebook
+	url = https://github.com/Jon1VK/full-stack-open-phonebook-app
