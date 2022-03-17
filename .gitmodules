@@ -1,3 +1,6 @@
 [submodule "part-3/phonebook"]
 	path = part-3/phonebook
-	url = https://github.com/Jon1VK/full-stack-open-phonebook-app
+	url = git@github.com:Jon1VK/full-stack-open-phonebook-app.git
+[submodule "part-4/bloglist"]
+	path = part-4/bloglist
+	url = git@github.com:Jon1VK/full-stack-open-bloglist-app.git
