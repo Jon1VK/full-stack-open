@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useField } from "./hooks";
 import { Link, Routes, Route, useMatch, useNavigate } from "react-router-dom";
 
 const Menu = () => {
@@ -33,12 +34,15 @@ const AnecdoteList = ({ anecdotes }) => (
   </div>
 );
 
-const Anecdote = ({ anecdote }) => (
+const Anecdote = ({ anecdote, vote }) => (
   <div>
     <h2>
       {anecdote.content} by ${anecdote.author}
     </h2>
-    <p>has {anecdote.votes} votes</p>
+    <p>
+      has {anecdote.votes} votes{" "}
+      <button onClick={() => vote(anecdote.id)}>vote</button>
+    </p>
     <p>
       for more info see{" "}
       <a href={anecdote.info} target="_blank" rel="noreferrer">
@@ -82,51 +86,46 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+  const content = useField("text");
+  const author = useField("text");
+  const info = useField("text");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0,
     });
     navigate("/");
   };
 
+  const handleReset = () => {
+    content.reset();
+    author.reset();
+    info.reset();
+  };
+
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input {...content.attributes} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...author.attributes} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...info.attributes} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+        <button type="reset">reset</button>
       </form>
     </div>
   );
@@ -184,7 +183,7 @@ const App = () => {
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route
           path="/anecdotes/:id"
-          element={<Anecdote anecdote={anecdote} />}
+          element={<Anecdote anecdote={anecdote} vote={vote} />}
         />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
         <Route path="/about" element={<About />} />
